@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Vending Machine Application</title>
+
+  <script src="src/coin.js"> </script>
+  <script src="src/cashRegister.js"></script>
+  <script src="src/product.js"> </script>
+  <script src="src/vendingBucket.js"></script>
+  <script src="src/vendingMachine.js"></script>
+  <script src="src/htmlScreen.js"></script>
+
+  <script type="text/javascript">
+  var vendingMachine;
+  function runApp(){
+    initVendingMachine();
+    vendingMachine.showProducts();
+
+    htmlScreen.display('..........................................................Selecting Coke');
+    vendingMachine.selectProduct(1);
+    htmlScreen.display('..........................................................Inserting coins ($0.75)');
+    vendingMachine.insertCoin(Coin.nickel());
+    vendingMachine.insertCoin(Coin.dime());
+    vendingMachine.insertCoin(Coin.dime());
+    vendingMachine.insertCoin(Coin.quarter());
+    vendingMachine.insertCoin(Coin.quarter());
+
+    vendingMachine.showProducts();  
+    htmlScreen.display('..........................................................Selecting Sprite');
+    vendingMachine.selectProduct(2);  
+    htmlScreen.display('..........................................................Inserting coins ($0.75)');
+    vendingMachine.insertCoin(Coin.quarter());
+    vendingMachine.insertCoin(Coin.quarter());
+    vendingMachine.insertCoin(Coin.quarter());
+
+
+    vendingMachine.showProducts();  
+    htmlScreen.display('..........................................................Selecting Diet Coke');
+    vendingMachine.selectProduct(3);  
+    htmlScreen.display('..........................................................Inserting coins ($0.50) and canceling');
+    vendingMachine.insertCoin(Coin.quarter());
+    vendingMachine.insertCoin(Coin.quarter());
+    vendingMachine.cancelTransaction();
+
+    vendingMachine.showProducts();  
+    htmlScreen.display('..........................................................Selecting Gatorade');
+    vendingMachine.selectProduct(4);  
+    htmlScreen.display('..........................................................Inserting coins ($0.75) when exact change');
+    vendingMachine.insertCoin(Coin.quarter());
+    vendingMachine.insertCoin(Coin.quarter());
+    vendingMachine.insertCoin(Coin.quarter());
+
+    vendingMachine.showProducts();  
+    htmlScreen.display('..........................................................Selecting Gatorade');
+    vendingMachine.selectProduct(4);  
+    htmlScreen.display('..........................................................Inserting invalid coin');
+    vendingMachine.insertCoin(Coin.penny());
+    vendingMachine.insertCoin(Coin.quarter());
+    vendingMachine.insertCoin(Coin.quarter());
+    vendingMachine.insertCoin(Coin.nickel());
+
+  };
+
+  function initVendingMachine(){
+      var buckets = {};
+      buckets[1] = new VendingBucket(new Product('Coke', 0.75), 1);
+      buckets[2] = new VendingBucket(new Product('Sprite', 0.60), 10);
+      buckets[3] = new VendingBucket(new Product('Diet Coke', 0.70), 10);
+      buckets[4] = new VendingBucket(new Product('Gatorade', 0.55), 10);
+
+      vendingMachine = new VendingMachine(buckets, new CashRegister(), htmlScreen);
+  }
+
+  </script>
+</head>
+
+<body onload="runApp();">
+</body>
+</html>
